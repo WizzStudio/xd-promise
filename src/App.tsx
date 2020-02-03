@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { SFC } from "react";
+import { Route } from "react-router-dom";
+import Home from "./pages/home";
+import Poster from "./pages/poster";
 
-const App = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: SFC = () => (
+  <div>
+    <Route path="/home" component={Home}></Route>
+    <Route path="/poster" component={Poster}></Route>
+    <style jsx global>
+      {`
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        img {
+          vertical-align: bottom;
+          display: block;
+        }
+      `}
+    </style>
+  </div>
+);
 
 export default App;
