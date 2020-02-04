@@ -6,9 +6,10 @@ import Loading from "../../components/Loading";
 import bg from "../../assets/bg.jpeg";
 import { placeArr, REDIRECT_URI } from "../../utils";
 import queryParse from "../../utils/queryParse";
+import xdUrl from "../../assets/xd.png";
 import arrow from "../../assets/arrow.png";
-import xd from "../../assets/xd.png";
 import Cookie from "js-cookie";
+
 interface Props {
   history: { push: any };
   location: { search: string };
@@ -19,24 +20,27 @@ const Home: SFC<Props> = props => {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
+    if (Cookie.get("place")) {
+      setPlace(Cookie.get("place"));
+    }
     const getData = async () => {
       if (!props.location.search) {
         window.location.href = REDIRECT_URI;
         return;
       }
       if (Cookie.get("avatar")) {
-        setAvatar(avatar);
+        setAvatar(Cookie.get("avatar"));
         return;
       }
       let data = queryParse(props.location.search);
       let url = `https://health.wizzstudio.com/login?code=${data.code}`;
       try {
         const userinfo = await fetch(url).then(res => res.json());
-        let avatar = userinfo.headimgurl ? userinfo.headimgurl : xd;
+        // let avatarUrl = userinfo.headimgurl ? userinfo.headimgurl : xdUrl;
         Cookie.set("avatar", userinfo.headimgurl);
-        setAvatar(avatar);
+        setAvatar(userinfo.headimgurl);
       } catch (error) {
-        setAvatar(xd);
+        // setAvatar(xd);
       }
     };
     getData();
@@ -71,14 +75,15 @@ const Home: SFC<Props> = props => {
     });
   };
 
+  const handlePlace = (e: any) => {
+    setPlace(e.target.value);
+    Cookie.set("place", e.target.value);
+  };
+
   return (
     <div className="app">
       <img className="bg" src={bg} />
-      <select
-        value={place}
-        className="place"
-        onChange={e => setPlace(e.target.value)}
-      >
+      <select value={place} className="place" onChange={e => handlePlace(e)}>
         <option value="default">选择</option>
         {placeArr.map(item => (
           <option key={item} value={item}>
