@@ -20,8 +20,6 @@ const Home: SFC<Props> = props => {
 
   useEffect(() => {
     const getData = async () => {
-      setAvatar(antAvatar);
-      return;
       if (!props.location.search) {
         window.location.href = REDIRECT_URI;
         return;

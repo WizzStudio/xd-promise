@@ -15,8 +15,6 @@ const MySlider: FC<Props> = ({ imgArr }) => {
   const settings = {
     infinite: true,
     speed: 200,
-    // slidesToShow: 1,
-    // slidesToScroll: 1,
     centerPadding: "40px",
     centerMode: true,
     afterChange: (e: number) => {
