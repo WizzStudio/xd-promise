@@ -27,7 +27,7 @@ const style = css`
     right: 0;
     left: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
   }
   .loader {
     position: absolute;
@@ -37,9 +37,11 @@ const style = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 999;
   }
   .tip {
-    font-size: 1.3em;
-    color: #eee;
+    font-size: 1em;
+    color: #eeeed1;
+    z-index: 999;
   }
 `;

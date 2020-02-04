@@ -24,10 +24,10 @@ const Home: SFC<Props> = props => {
       setPlace(Cookie.get("place"));
     }
     const getData = async () => {
-      if (!props.location.search) {
-        window.location.href = REDIRECT_URI;
-        return;
-      }
+      // if (!props.location.search) {
+      //   window.location.href = REDIRECT_URI;
+      //   return;
+      // }
       if (Cookie.get("avatar")) {
         setAvatar(Cookie.get("avatar"));
         return;
