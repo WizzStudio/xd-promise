@@ -1,29 +1,43 @@
 import React, { SFC, useState, useEffect } from "react";
 import css from "styled-jsx/css";
 import html2canvas from "html2canvas";
+import Canvas2Image from "canvas2image";
 import Target from "../../components/Target";
 import Loading from "../../components/Loading";
-import bg from "../../assets/img/bg.jpeg";
-import { placeArr } from "../../utils";
-import avatarUrl from "../../assets/avatar.jpg";
-
+import bg from "../../assets/bg.jpeg";
+import { placeArr, REDIRECT_URI } from "../../utils";
+import queryParse from "../../utils/queryParse";
+import arrow from "../../assets/arrow.png";
 interface Props {
   history: { push: any };
+  location: { search: string };
 }
+let antAvatar =
+  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const Home: SFC<Props> = props => {
   const [loading, setLoading] = useState(false);
   const [place, setPlace] = useState("default");
+  const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    document.addEventListener("touchend", e => {
-      console.log("e", e);
-    });
-    return document.removeEventListener("touchend", () => {});
-  });
+    const getData = async () => {
+      setAvatar(antAvatar);
+      return;
+      if (!props.location.search) {
+        window.location.href = REDIRECT_URI;
+        return;
+      }
+      let data = queryParse(props.location.search);
+      let url = `https://health.wizzstudio.com/login?code=${data.code}`;
+      const userinfo = await fetch(url).then(res => res.json());
+      setAvatar(userinfo.headimgurl);
+    };
+    getData();
+  }, []);
 
   const getImage = async () => {
     if (place === "default") {
-      alert("请选择地点");
+      alert("请选择所在地点");
       return;
     }
     let imgArr: Array<string> = [];
@@ -37,13 +51,16 @@ const Home: SFC<Props> = props => {
       })
     );
     res.forEach((canvas: any) => {
-      var imgUrl = canvas.toDataURL("image/png");
+      var imgUrl = canvas.toDataURL("image/jpeg");
       imgArr.push(imgUrl);
     });
-    setLoading(true);
+    console.log("imgArr", imgArr);
     props.history.push({
       pathname: "/poster",
-      state: { place, imgArr }
+      state: { place, imgArr },
+      query: {
+        code: 22
+      }
     });
   };
 
@@ -63,12 +80,11 @@ const Home: SFC<Props> = props => {
           </option>
         ))}
       </select>
-      {/* <button className="arrow" onClick={getImage}></button> */}
       <Loading loading={loading}></Loading>
       <div className="target">
-        <Target avatar={avatarUrl} place={place}></Target>
+        <Target avatar={avatar} place={place}></Target>
       </div>
-      <i className="top" onClick={getImage}></i>
+      <img src={arrow} alt="" className="arrow" onClick={getImage} />
       <style jsx>{style}</style>
     </div>
   );
@@ -102,7 +118,7 @@ const style = css`
   }
   .place {
     color: black;
-    font-size: 1.3em;
+    font-size: 1.3rem;
     position: absolute;
     top: 83%;
     left: 26%;
@@ -112,25 +128,11 @@ const style = css`
     top: -9999px;
     left: -9999px;
   }
-  .top {
+  .arrow {
+    width: 50px;
+    height: 50px;
     position: absolute;
-    right: 25px;
-    top: calc(50% - 25px);
-  }
-  .top:before,
-  .top:after {
-    position: absolute;
-    content: "";
-    border-bottom: 20px transparent dashed;
-    border-left: 20px #fff dashed;
-    border-right: 20px transparent dashed;
-    border-top: 20px transparent solid;
-  }
-  .top:after {
-    border-left: 20px #b22222 solid;
-  }
-  .top:before {
-    left: 5px;
-    border-left: 20px #fff solid;
+    right: 0px;
+    top: calc(50% - 30px);
   }
 `;

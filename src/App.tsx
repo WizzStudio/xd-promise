@@ -5,8 +5,8 @@ import Poster from "./pages/poster";
 
 const App: SFC = () => (
   <div>
-    <Route path="/home" component={Home}></Route>
-    <Route path="/poster" component={Poster}></Route>
+    <Route exact path="/" component={Home}></Route>
+    <Route exact path="/poster" component={Poster}></Route>
     <style jsx global>
       {`
         body {
@@ -16,6 +16,9 @@ const App: SFC = () => (
         img {
           vertical-align: bottom;
           display: block;
+        }
+        .slick-track {
+          overflow: hidden !important;
         }
       `}
     </style>

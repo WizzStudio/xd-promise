@@ -3,6 +3,7 @@ import img2 from "../assets/img/2.jpeg";
 import img3 from "../assets/img/3.jpeg";
 import img4 from "../assets/img/4.jpeg";
 import img5 from "../assets/img/5.jpeg";
+import { access } from "fs";
 
 const imgUrls: Array<string> = [img1, img2, img3, img4, img5];
 
@@ -44,4 +45,10 @@ const placeArr: Array<string> = [
   "其它"
 ];
 
-export { imgUrls, placeArr };
+const REDIRECT_URI =
+  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfde496ddf1d15848&redirect_uri=https%3A%2F%2Fhealth.wizzstudio.com&response_type=code&scope=snsapi_userinfo&state=shit#wechat_redirect";
+
+const USERINFO_URI = (access_token: string, openid: string) =>
+  `https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`;
+
+export { imgUrls, placeArr, REDIRECT_URI, USERINFO_URI };

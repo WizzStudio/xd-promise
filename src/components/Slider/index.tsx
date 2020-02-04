@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import Slider from "react-slick";
 import { imgUrls } from "../../utils";
 import css from "styled-jsx/css";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -15,15 +14,16 @@ const MySlider: FC<Props> = ({ imgArr }) => {
   const [num, setNum] = useState(0);
   const settings = {
     infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    speed: 200,
+    // slidesToShow: 1,
+    // slidesToScroll: 1,
     centerPadding: "40px",
     centerMode: true,
     afterChange: (e: number) => {
       setNum(e);
     },
-    fade: true
+    fade: true,
+    className: "center"
   };
   const change = () => {
     slider.slickNext();
@@ -59,5 +59,8 @@ const style = css`
     top: 80px;
     left: 150px;
     z-index: 999;
+  }
+  .center {
+    width: 100%;
   }
 `;

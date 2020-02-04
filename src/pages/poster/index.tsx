@@ -1,7 +1,6 @@
-import React, { SFC, useState, useEffect } from "react";
+import React, { SFC } from "react";
 import css from "styled-jsx/css";
 import Slider from "../../components/Slider";
-import BounceLoader from "react-spinners/BounceLoader";
 import { imgUrls } from "../../utils/index";
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
 }
 
 const Poster: SFC<Props> = props => {
+  console.log("props :", props);
   return (
     <div className="poster">
       <div className="wrap">
