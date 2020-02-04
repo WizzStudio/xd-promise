@@ -14,7 +14,7 @@ const Target: SFC<Props> = ({ avatar, place }) => {
         <div key={item} id={"tg" + index.toString()} className="wrap">
           <img src={item} className="img" alt=""></img>
           <div className="title">
-            <img src={avatar} alt="" className="avatar" />
+            {avatar && <img src={avatar} alt="" className="avatar" />}
             我在<span className="place">{place}</span>
           </div>
         </div>

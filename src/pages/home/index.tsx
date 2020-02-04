@@ -7,12 +7,11 @@ import bg from "../../assets/bg.jpeg";
 import { placeArr, REDIRECT_URI } from "../../utils";
 import queryParse from "../../utils/queryParse";
 import arrow from "../../assets/arrow.png";
+import xd from "../../assets/xd.png";
 interface Props {
   history: { push: any };
   location: { search: string };
 }
-let antAvatar =
-  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png";
 const Home: SFC<Props> = props => {
   const [loading, setLoading] = useState(false);
   const [place, setPlace] = useState("default");
@@ -26,8 +25,13 @@ const Home: SFC<Props> = props => {
       }
       let data = queryParse(props.location.search);
       let url = `https://health.wizzstudio.com/login?code=${data.code}`;
-      const userinfo = await fetch(url).then(res => res.json());
-      setAvatar(userinfo.headimgurl);
+      try {
+        const userinfo = await fetch(url).then(res => res.json());
+        let avatar = userinfo.headimgurl ? userinfo.headimgurl : xd;
+        setAvatar(avatar);
+      } catch (error) {
+        setAvatar(xd);
+      }
     };
     getData();
   }, []);
