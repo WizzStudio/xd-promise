@@ -8,6 +8,7 @@ import { placeArr, REDIRECT_URI } from "../../utils";
 import queryParse from "../../utils/queryParse";
 import arrow from "../../assets/arrow.png";
 import xd from "../../assets/xd.png";
+import Cookie from "js-cookie";
 interface Props {
   history: { push: any };
   location: { search: string };
@@ -23,11 +24,16 @@ const Home: SFC<Props> = props => {
         window.location.href = REDIRECT_URI;
         return;
       }
+      if (Cookie.get("avatar")) {
+        setAvatar(avatar);
+        return;
+      }
       let data = queryParse(props.location.search);
       let url = `https://health.wizzstudio.com/login?code=${data.code}`;
       try {
         const userinfo = await fetch(url).then(res => res.json());
         let avatar = userinfo.headimgurl ? userinfo.headimgurl : xd;
+        Cookie.set("avatar", userinfo.headimgurl);
         setAvatar(avatar);
       } catch (error) {
         setAvatar(xd);

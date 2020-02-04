@@ -69,3 +69,4 @@ declare module "ant-mobile";
 declare module "react-slick";
 declare module "styled-jsx";
 declare module "canvas2image";
+declare module "js-cookie";
