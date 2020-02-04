@@ -1,8 +1,8 @@
-import img1 from "../assets/1.jpeg";
-import img2 from "../assets/2.jpeg";
-import img3 from "../assets/3.jpeg";
-import img4 from "../assets/4.jpeg";
-import img5 from "../assets/5.jpeg";
+import img1 from "../assets/1.png";
+import img2 from "../assets/2.png";
+import img3 from "../assets/3.png";
+import img4 from "../assets/4.png";
+import img5 from "../assets/5.png";
 
 const imgUrls: Array<string> = [img1, img2, img3, img4, img5];
 

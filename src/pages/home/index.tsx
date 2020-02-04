@@ -71,10 +71,9 @@ const Home: SFC<Props> = props => {
       <select
         value={place}
         className="place"
-        placeholder="请选择"
         onChange={e => setPlace(e.target.value)}
       >
-        <option value="default">请选择</option>
+        <option value="default">选择</option>
         {placeArr.map(item => (
           <option key={item} value={item}>
             {item}

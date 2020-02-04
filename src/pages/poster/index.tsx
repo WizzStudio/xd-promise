@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Poster: SFC<Props> = props => {
-  console.log("props :", props);
   let imgArr = props.location.state ? props.location.state.imgArr : imgUrls;
   let slider: any;
   const [num, setNum] = useState(0);

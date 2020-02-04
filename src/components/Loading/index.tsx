@@ -31,8 +31,8 @@ const style = css`
   }
   .loader {
     position: absolute;
-    top: 40vh;
-    left: 32vw;
+    top: calc(50% - 75px);
+    left: calc(50% - 75px);
     display: flex;
     flex-direction: column;
     justify-content: center;
