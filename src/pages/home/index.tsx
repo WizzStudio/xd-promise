@@ -1,7 +1,6 @@
 import React, { SFC, useState, useEffect } from "react";
 import css from "styled-jsx/css";
 import html2canvas from "html2canvas";
-import Canvas2Image from "canvas2image";
 import Target from "../../components/Target";
 import Loading from "../../components/Loading";
 import bg from "../../assets/bg.jpeg";
