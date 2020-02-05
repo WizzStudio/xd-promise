@@ -8,6 +8,12 @@ declare namespace NodeJS {
     readonly PUBLIC_URL: string;
   }
 }
+interface Window {
+  wx: any;
+  qq: any;
+  geolocation: any;
+  callback: any;
+}
 
 declare module "*.bmp" {
   const src: string;
@@ -70,3 +76,5 @@ declare module "react-slick";
 declare module "styled-jsx";
 declare module "canvas2image";
 declare module "js-cookie";
+declare module "jsonp";
+declare module "fetch-jsonp";

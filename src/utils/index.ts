@@ -40,8 +40,7 @@ const placeArr: Array<string> = [
   "新疆",
   "台湾",
   "香港",
-  "澳门",
-  "其它"
+  "澳门"
 ];
 
 const REDIRECT_URI =

@@ -60,6 +60,7 @@ const style = css`
     justify-content: center;
     font-size: 1em;
     color: #eee;
+    margin-top: 10px;
   }
   .wrap {
     display: flex;

@@ -6,9 +6,9 @@ import Loading from "../../components/Loading";
 import bg from "../../assets/bg.jpeg";
 import { placeArr, REDIRECT_URI } from "../../utils";
 import queryParse from "../../utils/queryParse";
-import xdUrl from "../../assets/xd.png";
 import arrow from "../../assets/arrow.png";
 import Cookie from "js-cookie";
+import fetchJsonp from "fetch-jsonp";
 
 interface Props {
   history: { push: any };
@@ -17,12 +17,9 @@ interface Props {
 const Home: SFC<Props> = props => {
   const [loading, setLoading] = useState(false);
   const [place, setPlace] = useState("default");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState();
 
   useEffect(() => {
-    if (Cookie.get("place")) {
-      setPlace(Cookie.get("place"));
-    }
     const getData = async () => {
       if (!props.location.search) {
         window.location.href = REDIRECT_URI;
@@ -36,14 +33,37 @@ const Home: SFC<Props> = props => {
       let url = `https://health.wizzstudio.com/login?code=${data.code}`;
       try {
         const userinfo = await fetch(url).then(res => res.json());
-        // let avatarUrl = userinfo.headimgurl ? userinfo.headimgurl : xdUrl;
-        Cookie.set("avatar", userinfo.headimgurl);
-        setAvatar(userinfo.headimgurl);
-      } catch (error) {
-        // setAvatar(xd);
-      }
+        if (userinfo.headimgurl) {
+          Cookie.set("avatar", userinfo.headimgurl);
+          setAvatar(userinfo.headimgurl);
+        }
+      } catch (error) {}
     };
     getData();
+  }, []);
+
+  useEffect(() => {
+    const getPlace = async () => {
+      const placeIp = await fetchJsonp(
+        "https://api.map.baidu.com/location/ip?ak=CRGLNm2xNTaRKgwRtC9hTsYOBwkxG14U",
+        {
+          jsonpCallback: "callback"
+        }
+      ).then((res: any) => res.json());
+      setPlace(placeIp.address.split("|")[1]);
+    };
+    getPlace();
+  }, []);
+
+  useEffect(() => {
+    document.body.addEventListener(
+      "touchmove",
+      function(e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+    return document.body.removeEventListener("touchmove", function() {});
   }, []);
 
   const getImage = async () => {
@@ -68,16 +88,12 @@ const Home: SFC<Props> = props => {
     console.log("imgArr", imgArr);
     props.history.push({
       pathname: "/poster",
-      state: { place, imgArr },
-      query: {
-        code: 22
-      }
+      state: { place, imgArr }
     });
   };
 
   const handlePlace = (e: any) => {
     setPlace(e.target.value);
-    Cookie.set("place", e.target.value);
   };
 
   return (
@@ -126,6 +142,8 @@ const style = css`
     -webkit-appearance: none;
     -moz-appearance: none;
     text-align: center;
+    /* 兼容chrome */
+    text-align-last: center;
   }
   .place {
     color: black;
@@ -140,10 +158,20 @@ const style = css`
     left: -9999px;
   }
   .arrow {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     position: absolute;
     right: 0px;
     top: calc(50% - 30px);
+    animation: flash 1.2s linear infinite;
+  }
+
+  @keyframes flash {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.3;
+    }
   }
 `;
