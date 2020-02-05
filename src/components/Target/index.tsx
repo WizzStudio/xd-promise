@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Target: SFC<Props> = ({ avatar, place }) => {
-  console.log("avatar", avatar);
   return (
     <div>
       {imgUrls.map((item, index) => (
@@ -64,6 +63,6 @@ const style = css`
   .place {
     font-size: 1.5em;
     font-weight: 900;
-    margin-left: 10px;
+    margin-left: 1px;
   }
 `;

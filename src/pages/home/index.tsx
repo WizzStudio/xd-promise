@@ -40,9 +40,7 @@ const Home: SFC<Props> = props => {
       } catch (error) {}
     };
     getData();
-  }, []);
 
-  useEffect(() => {
     const getPlace = async () => {
       const placeIp = await fetchJsonp(
         "https://api.map.baidu.com/location/ip?ak=CRGLNm2xNTaRKgwRtC9hTsYOBwkxG14U",
