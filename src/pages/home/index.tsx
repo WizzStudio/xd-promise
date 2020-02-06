@@ -21,9 +21,12 @@ const Home: SFC<Props> = props => {
 
   useEffect(() => {
     const getData = async () => {
-      if (!props.location.search) {
-        window.location.href = REDIRECT_URI;
-        return;
+      let ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger\/[0-9]/i)) {
+        if (!props.location.search) {
+          window.location.href = REDIRECT_URI;
+          return;
+        }
       }
       if (Cookie.get("avatar")) {
         setAvatar(Cookie.get("avatar"));
@@ -169,7 +172,7 @@ const style = css`
       opacity: 1;
     }
     to {
-      opacity: 0.3;
+      opacity: 0;
     }
   }
 `;
